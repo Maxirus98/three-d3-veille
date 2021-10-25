@@ -1,10 +1,9 @@
 import { OrbitControls, Stars } from "drei";
-import { useEffect, useState } from "react";
-import { Canvas, extend, ResizeContainer, useThree } from "react-three-fiber";
-import * as THREE from "three";
+import { useState } from "react";
+import { Canvas } from "react-three-fiber";
 import { Euler } from "three";
 import { Physics } from "use-cannon";
-import Plane from "../components/Plane";
+import Ground from "../components/Plane";
 import Player from "../components/Player";
 
 const initVelocity = {
@@ -15,21 +14,14 @@ const initVelocity = {
 
 const Scene1 = () => {
   const [velocity, setVelocity] = useState(initVelocity);
-  const camera = useThree();
-  // Only called when it's pressed
+
+  // Only called when a key is pressed
   const handleMovements = (key) => {
     if (key.code === "KeyD") setVelocity({ ...velocity, x: -10 });
     if (key.code === "KeyA") setVelocity({ ...velocity, x: 10 });
     if (key.code === "KeyS") setVelocity({ ...velocity, x: 0 });
   };
 
-  const moveCamera = () => {
-    console.log("camera", camera);
-  };
-
-  useEffect(() => {
-    moveCamera();
-  });
   return (
     <div
       style={{
@@ -49,8 +41,8 @@ const Scene1 = () => {
         <OrbitControls />
         <Stars />
         <directionalLight
-          position={[0, 10, 0]}
-          intensity={1.5}
+          position={[0, 10, 5]}
+          intensity={2}
           shadow-mapSize-width={1024}
           shadow-mapSize-height={1024}
           shadow-camera-far={50}
@@ -61,7 +53,7 @@ const Scene1 = () => {
         />
         <Physics gravity={[0, 0, 0]}>
           <Player movements={velocity} />
-          <Plane />
+          <Ground />
         </Physics>
       </Canvas>
     </div>

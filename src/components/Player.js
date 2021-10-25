@@ -1,7 +1,6 @@
 import { Box } from "drei";
 import { useEffect } from "react";
-import { Vector3 } from "three";
-import { Physics, usePlane, useBox } from "use-cannon";
+import { useBox } from "use-cannon";
 
 function Player({ movements }) {
   const [ref, api] = useBox(() => ({
@@ -17,16 +16,8 @@ function Player({ movements }) {
   }, [movements]);
 
   return (
-    <Box
-      ref={ref}
-      position={[0, 2, 0]}
-      onPointerMove={(e) => {
-        api.position.set(e.point);
-        console.log("e point", e.point);
-        console.log("pos", ref.current.position);
-      }}
-    >
-      {<meshLambertMaterial attach="material" color="hotpink" />}
+    <Box ref={ref} position={[0, 2, 0]} castShadow={true}>
+      {<meshLambertMaterial attach="material" color="red" />}
     </Box>
   );
 }
