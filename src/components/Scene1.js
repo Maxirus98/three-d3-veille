@@ -1,27 +1,34 @@
-import { OrbitControls, Stars } from "drei";
-import { useState } from "react";
-import { Canvas } from "react-three-fiber";
+import { Stars } from "drei";
+import { useState, useRef } from "react";
+import { Canvas, useThree, useFrame, extend } from "react-three-fiber";
 import { Euler } from "three";
-import { Physics } from "use-cannon";
-import Ground from "../components/Plane";
+import { Physics, useBox } from "use-cannon";
+import Plane from "../components/Plane";
 import Player from "../components/Player";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
-const initVelocity = {
-  x: 0,
-  y: 0,
-  z: 10,
-};
+import Interactables from "./Interactables/Interactables";
+import { Suspense } from "react";
 
+extend({ OrbitControls });
+
+/* const CameraControls = () => {
+  const {
+    camera,
+    gl: { domElement },
+  } = useThree();
+
+  // Ref to the controls, so that we can update them on every frame using useFrame
+  const controls = useRef();
+  useFrame((state) => {
+    console.log("camera", camera);
+    controls.current.update();
+  });
+  return <orbitControls ref={controls} args={[camera, domElement]} />;
+}; */
+
+// Obstacles x and z position are randomized
 const Scene1 = () => {
-  const [velocity, setVelocity] = useState(initVelocity);
-
-  // Only called when a key is pressed
-  const handleMovements = (key) => {
-    if (key.code === "KeyD") setVelocity({ ...velocity, x: -10 });
-    if (key.code === "KeyA") setVelocity({ ...velocity, x: 10 });
-    if (key.code === "KeyS") setVelocity({ ...velocity, x: 0 });
-  };
-
   return (
     <div
       style={{
@@ -33,27 +40,26 @@ const Scene1 = () => {
     >
       <Canvas
         camera={{
-          position: [0, 10, -10],
+          position: [0, 5, -5],
           rotation: new Euler(0, 90, 0),
+          fov: 90,
         }}
-        onKeyDown={(key) => handleMovements(key)}
+        onKeyPress={(key) => {
+          if (key.code === "KeyD") {
+          }
+        }}
       >
-        <OrbitControls />
+        <fog attach="fog" args={["gray", 0, 100]} />
         <Stars />
-        <directionalLight
-          position={[0, 10, 5]}
-          intensity={2}
-          shadow-mapSize-width={1024}
-          shadow-mapSize-height={1024}
-          shadow-camera-far={50}
-          shadow-camera-left={-10}
-          shadow-camera-right={10}
-          shadow-camera-top={10}
-          shadow-camera-bottom={-10}
-        />
-        <Physics gravity={[0, 0, 0]}>
-          <Player movements={velocity} />
-          <Ground />
+        <directionalLight intensity={1} />
+        <ambientLight intensity={0.1} />
+        <Physics gravity={[0, -9, 0]} defaultContactMaterial={{ friction: 0 }}>
+          <Suspense>
+            <Interactables isObstacle={true} />
+            <Interactables isObstacle={false} />
+          </Suspense>
+          <Player />
+          <Plane />
         </Physics>
       </Canvas>
     </div>
