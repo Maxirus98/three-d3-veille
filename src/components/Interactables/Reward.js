@@ -1,10 +1,11 @@
 import { Sphere } from "drei";
 import { useFrame } from "react-three-fiber";
-import { Euler, Material, Vector3 } from "three";
-import { useBox, useSphere } from "use-cannon";
-import { randomPositions } from "./Interactables";
+import { Vector3 } from "three";
+import { useBox } from "use-cannon";
+
 function Reward({ position, index }) {
   var currentPositionZ = position[2];
+  var currentSpeed = 0.4;
   const [ref, api] = useBox(() => ({
     mass: 1,
     position: position,
@@ -12,7 +13,7 @@ function Reward({ position, index }) {
   }));
 
   useFrame(() => {
-    currentPositionZ -= 0.4;
+    currentPositionZ += currentSpeed;
     ref.current.position.set(position[0], position[1], currentPositionZ);
   });
 

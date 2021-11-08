@@ -4,16 +4,12 @@ import { useEffect, useRef } from "react";
 const GROUND_HEIGHT = -50; // A Constant to store the ground height of the game.
 
 // A Ground plane that moves relative to the player. The player stays at 0,0
-function Plane() {
-  var currentPositionZ = 0;
+function Plane({ args }) {
   const [ref, api] = usePlane(() => ({
+    mass: 1000,
     rotation: [-Math.PI / 2, 0, 0],
+    type: "Static",
   }));
-
-  useFrame(() => {
-    currentPositionZ -= 0.04;
-    ref.current.position.set(0, 0, currentPositionZ);
-  });
 
   return (
     <mesh
@@ -22,7 +18,7 @@ function Plane() {
       rotation={[-Math.PI / 2, 0, 0]}
       ref={ref}
     >
-      <planeBufferGeometry attach="geometry" args={[50, 5000, 500, 50]} />
+      <planeBufferGeometry attach="geometry" args={args} />
       <meshLambertMaterial attach="material" color="black" wireframe />
     </mesh>
   );

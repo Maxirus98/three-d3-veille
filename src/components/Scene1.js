@@ -1,34 +1,22 @@
-import { Stars } from "drei";
-import { useState, useRef } from "react";
-import { Canvas, useThree, useFrame, extend } from "react-three-fiber";
-import { Euler } from "three";
-import { Physics, useBox } from "use-cannon";
+import { OrbitControls, Stars } from "drei";
+import React, { Suspense, useState } from "react";
+import { Canvas, useFrame, useLoader, useThree } from "react-three-fiber";
+import { Euler, Font, FontLoader, Vector3 } from "three";
+import { Physics } from "use-cannon";
 import Plane from "../components/Plane";
 import Player from "../components/Player";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-
-import Interactables from "./Interactables/Interactables";
-import { Suspense } from "react";
-
-extend({ OrbitControls });
-
-/* const CameraControls = () => {
-  const {
-    camera,
-    gl: { domElement },
-  } = useThree();
-
-  // Ref to the controls, so that we can update them on every frame using useFrame
-  const controls = useRef();
-  useFrame((state) => {
-    console.log("camera", camera);
-    controls.current.update();
-  });
-  return <orbitControls ref={controls} args={[camera, domElement]} />;
-}; */
+import { Obstacles, Rewards } from "./Interactables/Interactables";
+import Text from "./Text";
+import * as THREE from "three";
+import { useEffect } from "react/cjs/react.development";
 
 // Obstacles x and z position are randomized
 const Scene1 = () => {
+  const [gameOver, setGameOver] = useState(false);
+  const handleGameOver = () => {
+    setGameOver(true);
+  };
+
   return (
     <div
       style={{
@@ -38,30 +26,35 @@ const Scene1 = () => {
         height: "75vh",
       }}
     >
-      <Canvas
-        camera={{
-          position: [0, 5, -5],
-          rotation: new Euler(0, 90, 0),
-          fov: 90,
-        }}
-        onKeyPress={(key) => {
-          if (key.code === "KeyD") {
-          }
-        }}
-      >
-        <fog attach="fog" args={["gray", 0, 100]} />
-        <Stars />
-        <directionalLight intensity={1} />
-        <ambientLight intensity={0.1} />
-        <Physics gravity={[0, -9, 0]} defaultContactMaterial={{ friction: 0 }}>
-          <Suspense>
-            <Interactables isObstacle={true} />
-            <Interactables isObstacle={false} />
+      {gameOver ? (
+        <Canvas>
+          <Suspense fallback={<></>}>
+            <Text size={10}>Fin de la partie</Text>
           </Suspense>
-          <Player />
-          <Plane />
-        </Physics>
-      </Canvas>
+          <OrbitControls />
+          <Stars />
+        </Canvas>
+      ) : (
+        <Canvas
+          camera={{
+            position: [0, 5, 5],
+            rotation: new Euler(0, 90, 0),
+            fov: 90,
+          }}
+        >
+          <fog attach="fog" args={["gray", 0, 100]} />
+          <Stars />
+          <directionalLight intensity={1} />
+          <ambientLight intensity={0.1} />
+          <Physics gravity={[0, 0, 0]}>
+            <Obstacles />
+            <Rewards />
+
+            <Player handleGameOver={handleGameOver} />
+            <Plane args={[30, 5000, 500, 50]} />
+          </Physics>
+        </Canvas>
+      )}
     </div>
   );
 };
