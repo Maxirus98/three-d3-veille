@@ -26,9 +26,17 @@ const Text = forwardRef(
       mesh.current.position.x = -size.x / 2;
       mesh.current.position.y = -size.y;
     }, [children]);
+
     return (
-      <group ref={ref} {...props} scale={[0.1 * size, 0.1 * size, 0.1]}>
-        <mesh ref={mesh}>
+      <group
+        ref={ref}
+        {...props}
+        scale={[0.1 * size, 0.1 * size, 0.1]}
+        onClick={(e) => {
+          if (props.clickEnabled) props.handleReplay();
+        }}
+      >
+        <mesh ref={mesh} position={props.position}>
           <textGeometry args={[children, config]} />
           <meshNormalMaterial />
         </mesh>

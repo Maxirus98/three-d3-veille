@@ -22,7 +22,7 @@ function Obstacle({ position }) {
   });
 
   return (
-    <mesh ref={ref}>
+    <mesh ref={ref} name="obstacle">
       <boxBufferGeometry attach="geometry" args={[5, 5, 1]} />
       <meshLambertMaterial attach="material" color="red" />
     </mesh>

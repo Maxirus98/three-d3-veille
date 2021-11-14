@@ -1,20 +1,21 @@
-import { OrbitControls, Stars } from "drei";
-import React, { Suspense, useState } from "react";
-import { Canvas, useFrame, useLoader, useThree } from "react-three-fiber";
-import { Euler, Font, FontLoader, Vector3 } from "three";
+import React, { useState } from "react";
+import { Canvas } from "react-three-fiber";
+import { Euler } from "three";
 import { Physics } from "use-cannon";
 import Plane from "../components/Plane";
 import Player from "../components/Player";
+import GameOver from "./GameOver";
 import { Obstacles, Rewards } from "./Interactables/Interactables";
-import Text from "./Text";
-import * as THREE from "three";
-import { useEffect } from "react/cjs/react.development";
 
 // Obstacles x and z position are randomized
 const Scene1 = () => {
   const [gameOver, setGameOver] = useState(false);
   const handleGameOver = () => {
     setGameOver(true);
+  };
+
+  const handleReplay = () => {
+    setGameOver(false);
   };
 
   return (
@@ -27,13 +28,7 @@ const Scene1 = () => {
       }}
     >
       {gameOver ? (
-        <Canvas>
-          <Suspense fallback={<></>}>
-            <Text size={10}>Fin de la partie</Text>
-          </Suspense>
-          <OrbitControls />
-          <Stars />
-        </Canvas>
+        <GameOver handleReplay={handleReplay} />
       ) : (
         <Canvas
           camera={{
@@ -43,7 +38,6 @@ const Scene1 = () => {
           }}
         >
           <fog attach="fog" args={["gray", 0, 100]} />
-          <Stars />
           <directionalLight intensity={1} />
           <ambientLight intensity={0.1} />
           <Physics gravity={[0, 0, 0]}>

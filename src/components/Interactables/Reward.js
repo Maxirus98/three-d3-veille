@@ -1,4 +1,3 @@
-import { Sphere } from "drei";
 import { useFrame } from "react-three-fiber";
 import { Vector3 } from "three";
 import { useBox } from "use-cannon";
@@ -10,17 +9,24 @@ function Reward({ position, index }) {
     mass: 1,
     position: position,
     rotation: [0, 90, 0],
+    collisionFilterMask: 5,
+    onCollide: (e) => {
+      if (e.body.name === "player") {
+        ref.current.visible = false;
+      }
+    },
   }));
 
   useFrame(() => {
     currentPositionZ += currentSpeed;
-    ref.current.position.set(position[0], position[1], currentPositionZ);
+    api.position.set(position[0], position[1], currentPositionZ);
   });
 
   return (
-    <Sphere ref={ref} scale={new Vector3(0.2, 1, 1)}>
+    <mesh ref={ref} scale={new Vector3(0.2, 1, 1)} name="player">
+      <sphereBufferGeometry />
       <meshLambertMaterial attach="material" color="yellow" />
-    </Sphere>
+    </mesh>
   );
 }
 

@@ -1,4 +1,3 @@
-import { Box } from "drei";
 import { useState } from "react";
 import { useFrame, useThree } from "react-three-fiber";
 import { useBox } from "use-cannon";
@@ -13,7 +12,7 @@ function Player({ handleGameOver }) {
     args: [1, 1, 1],
     collisionFilterMask: 5,
     onCollide: (e) => {
-      if (e.collisionFilters.bodyFilterMask == 5) handleGameOver();
+      if (e.body.name === "obstacle") handleGameOver();
     },
   }));
 
@@ -32,7 +31,7 @@ function Player({ handleGameOver }) {
   });
 
   return (
-    <mesh ref={ref}>
+    <mesh ref={ref} name="player">
       <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
       <meshLambertMaterial attach="material" color="white" />
     </mesh>
