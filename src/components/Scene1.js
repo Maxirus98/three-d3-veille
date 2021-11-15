@@ -1,3 +1,4 @@
+import { Stars } from "drei";
 import React, { useState } from "react";
 import { Canvas } from "react-three-fiber";
 import { Euler } from "three";
@@ -21,10 +22,9 @@ const Scene1 = () => {
   return (
     <div
       style={{
-        margin: "auto",
-        marginTop: "10vh",
+        float: "left",
         width: "75vw",
-        height: "75vh",
+        height: "100vh",
       }}
     >
       {gameOver ? (
@@ -40,6 +40,7 @@ const Scene1 = () => {
           <fog attach="fog" args={["gray", 0, 100]} />
           <directionalLight intensity={1} />
           <ambientLight intensity={0.1} />
+          <Stars />
           <Physics gravity={[0, 0, 0]}>
             <Obstacles />
             <Rewards />

@@ -4,11 +4,12 @@ import { useBox } from "use-cannon";
 
 function Reward({ position, index }) {
   var currentPositionZ = position[2];
-  var currentSpeed = 0.4;
+  var currentSpeed = 0.5;
   const [ref, api] = useBox(() => ({
     mass: 1,
     position: position,
     rotation: [0, 90, 0],
+    fixedRotation: false,
     collisionFilterMask: 5,
     onCollide: (e) => {
       if (e.body.name === "player") {

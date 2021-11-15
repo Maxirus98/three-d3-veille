@@ -3,7 +3,7 @@ import { useFrame, useThree } from "react-three-fiber";
 import { useBox } from "use-cannon";
 
 function Player({ handleGameOver }) {
-  const [playerPosition, setPlayerPosition] = useState([0, 1, -3]);
+  const [playerPosition, setPlayerPosition] = useState([0, 1, 3]);
   const [ref, api] = useBox(() => ({
     mass: 1,
     type: "Kinematic",
@@ -18,7 +18,7 @@ function Player({ handleGameOver }) {
 
   useFrame(({ mouse }) => {
     setPlayerPosition({
-      position: { x: mouse.x * 15, y: 1 },
+      position: { x: mouse.x * 10, y: 1 },
     });
   });
 

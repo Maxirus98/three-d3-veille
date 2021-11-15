@@ -1,3 +1,4 @@
+import { Stars, OrbitControls } from "drei";
 import { Suspense } from "react";
 import { Canvas } from "react-three-fiber";
 import Text from "./Text";
@@ -9,6 +10,8 @@ function GameOver({ handleReplay }) {
         <Text size={5} position={[0, 0, 0]} clickEnabled={false}>
           Fin de la partie
         </Text>
+        <Stars />
+        <OrbitControls />
         <Text
           size={4}
           position={[0, -1, 0]}

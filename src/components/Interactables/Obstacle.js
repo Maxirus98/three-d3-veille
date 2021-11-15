@@ -3,7 +3,7 @@ import { useBox } from "use-cannon";
 
 function Obstacle({ position }) {
   var currentPositionZ = position[2];
-  var currentSpeed = 0.4;
+  var currentSpeed = 0.5;
   const [ref, api] = useBox(() => ({
     mass: 100,
     position: position,
@@ -11,9 +11,6 @@ function Obstacle({ position }) {
     args: [5, 5, 1],
     fixedRotation: true,
     collisionFilterMask: 5,
-    onCollide: (e) => {
-      if (e.collisionFilters.bodyFilterMask == 5) console.log("hit 5");
-    },
   }));
 
   useFrame(() => {
@@ -23,8 +20,8 @@ function Obstacle({ position }) {
 
   return (
     <mesh ref={ref} name="obstacle">
-      <boxBufferGeometry attach="geometry" args={[5, 5, 1]} />
-      <meshLambertMaterial attach="material" color="red" />
+      <boxBufferGeometry attach="geometry" args={[5, 5, 0.5, 10, 2]} />
+      <meshLambertMaterial attach="material" color="#C0C0C0" wireframe />
     </mesh>
   );
 }
