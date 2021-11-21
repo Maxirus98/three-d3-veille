@@ -2,7 +2,7 @@ import Obstacle from "./Obstacle";
 import Reward from "./Reward";
 
 export const Obstacles = () => {
-  var randomPositions = getRandomPositions(100, 2.5);
+  var randomPositions = getRandomPositions(100, 1);
   return randomPositions.map((randomPosition, key) => {
     return <Obstacle position={randomPosition} key={key} />;
   });

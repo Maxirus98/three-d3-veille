@@ -8,7 +8,7 @@ function Obstacle({ position }) {
     mass: 100,
     position: position,
     rotation: [0, 0, 0],
-    args: [5, 5, 1],
+    args: [5, 5, 0.5],
     fixedRotation: true,
     collisionFilterMask: 5,
   }));
@@ -20,7 +20,7 @@ function Obstacle({ position }) {
 
   return (
     <mesh ref={ref} name="obstacle">
-      <boxBufferGeometry attach="geometry" args={[5, 5, 0.5, 10, 2]} />
+      <boxBufferGeometry attach="geometry" args={[5, 10, 0.5, 10, 10]} />
       <meshLambertMaterial attach="material" color="#C0C0C0" wireframe />
     </mesh>
   );

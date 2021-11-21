@@ -33,8 +33,8 @@ const Scene1 = () => {
         <Canvas
           camera={{
             position: [0, 5, 5],
-            rotation: new Euler(0, 90, 0),
-            fov: 90,
+            rotation: new Euler(0, 75, 0),
+            fov: 100,
           }}
         >
           <fog attach="fog" args={["gray", 0, 100]} />
