@@ -1,4 +1,4 @@
-import { Stars } from "drei";
+import { OrbitControls, Stars } from "drei";
 import React, { useState, memo } from "react";
 import { Canvas } from "react-three-fiber";
 import { useEffect } from "react/cjs/react.development";
@@ -8,10 +8,12 @@ import Plane from "../components/Plane";
 import Player from "../components/Player";
 import GameOver from "./GameOver";
 import { Obstacles, Rewards } from "./Interactables/Interactables";
+import LevelTrigger from "./LevelTrigger";
 
 // Obstacles x and z position are randomized
 const Scene1 = ({ handleDataChange }) => {
   const [currentGameId, setCurrentGameId] = useState(1);
+  const [currentLevel, setCurrentLevel] = useState(1);
   const [gameOver, setGameOver] = useState(false);
   const handleGameOver = () => {
     setGameOver(true);
@@ -24,6 +26,10 @@ const Scene1 = ({ handleDataChange }) => {
   const handleReplay = () => {
     setCurrentGameId(currentGameId + 1);
     setGameOver(false);
+  };
+
+  const handleLevelChange = () => {
+    setCurrentLevel(2);
   };
 
   return (
@@ -44,6 +50,7 @@ const Scene1 = ({ handleDataChange }) => {
             fov: 100,
           }}
         >
+          <OrbitControls />
           <fog attach="fog" args={["gray", 0, 100]} />
           <directionalLight intensity={1} />
           <ambientLight intensity={0.1} />
@@ -55,8 +62,10 @@ const Scene1 = ({ handleDataChange }) => {
             <Player
               handleGameOver={handleGameOver}
               handleScoreChange={handleScoreChange}
+              handleLevelChange={handleLevelChange}
             />
-            <Plane args={[30, 5000, 500, 50]} />
+            <Plane args={[30, 3000, 500, 50]} />
+            {/* <LevelTrigger position={[0, 1, -100]} args={[30, 1, 1, 100, 100]} /> */}
           </Physics>
         </Canvas>
       )}

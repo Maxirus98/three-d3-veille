@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useFrame, useThree } from "react-three-fiber";
 import { useBox } from "use-cannon";
 
-function Player({ handleGameOver, handleScoreChange }) {
+function Player({ handleGameOver, handleScoreChange, handleLevelChange }) {
   let points = 0;
   const [playerPosition, setPlayerPosition] = useState([0, 1, 3]);
   const [ref, api] = useBox(() => ({
@@ -18,6 +18,7 @@ function Player({ handleGameOver, handleScoreChange }) {
         handleScoreChange(points);
       }
       if (e.body.name === "obstacle") handleGameOver(points);
+      if (e.body.name === "level") handleLevelChange();
     },
   }));
 

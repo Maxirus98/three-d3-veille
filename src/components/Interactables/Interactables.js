@@ -19,7 +19,7 @@ function getRandomPositions(numberOfObstacles, height) {
   const positions = [];
   for (let i = 0; i < numberOfObstacles; i++) {
     var randomX = Math.floor(Math.random() * 20) - 9;
-    var randomZ = Math.floor(Math.random() * -5000) + 100;
+    var randomZ = Math.floor(Math.random() * -3000) + 100;
     if (!positions.includes([randomX, height, randomZ]))
       positions.push([randomX, height, randomZ]);
   }

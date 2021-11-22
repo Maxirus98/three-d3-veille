@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import "./LineChart.css";
-const LineChart = ({ lineChartData }) => {
+const StripChart = ({ lineChartData }) => {
   const chartRef = useRef();
-
+  let y;
+  let x;
   useEffect(() => {
     const margin = { top: 20, right: 30, bottom: 30, left: 30 };
     const width =
@@ -28,7 +29,7 @@ const LineChart = ({ lineChartData }) => {
 
     const getXData = () => {
       return d3
-        .scaleLinear()
+        .scaleBand()
         .domain(
           d3.extent([0, 10], function (d) {
             return d;
@@ -36,7 +37,7 @@ const LineChart = ({ lineChartData }) => {
         )
         .range([0, width]);
     };
-    const x = getXData();
+    x = getXData();
     svg
       .append("g")
       .attr("transform", "translate(0," + height + ")")
@@ -53,51 +54,23 @@ const LineChart = ({ lineChartData }) => {
         )
         .range([height, 0]);
     };
-    const y = getYData();
+    y = getYData();
 
     svg.append("g").attr("color", "white").call(d3.axisLeft(y));
 
-    // Draw Line
+    // Draw Rect
     svg
-      .append("path")
-      .transition()
-      .ease(d3.easeLinear)
-      .duration(5000)
-      .attr("stroke", "white")
-      .attr("stroke-width", 3)
-      .attr(
-        "d",
-        d3
-          .line()
-          .x(function (d) {
-            return x(d.x);
-          })
-          .y(function (d) {
-            return y(d.y);
-          })(lineChartData)
-      );
-
-    svg.selectAll("path").attr("fill", "none");
-    svg.selectAll("line").attr("fill", "none");
-
-    // Add title
-    svg
-      .append("text")
-      .attr("x", width / 2)
-      .attr("y", margin.top / 5 - 10)
-      .attr("text-anchor", "middle")
-      .attr("font-size", "16px")
+      .append("rect")
       .attr("fill", "white")
-      .text("Nombre de points par partie");
+      .attr("width", 10)
+      .attr("height", 10);
   });
 
   return (
     <div id="lineChart">
-      <svg id="svg" ref={chartRef}>
-        <p></p>
-      </svg>
+      <svg id="svg" ref={chartRef}></svg>
     </div>
   );
 };
 
-export default LineChart;
+export default StripChart;
