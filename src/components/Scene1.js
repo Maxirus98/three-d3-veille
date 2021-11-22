@@ -9,10 +9,14 @@ import GameOver from "./GameOver";
 import { Obstacles, Rewards } from "./Interactables/Interactables";
 
 // Obstacles x and z position are randomized
-const Scene1 = () => {
+const Scene1 = ({ handleDataChange }) => {
   const [gameOver, setGameOver] = useState(false);
   const handleGameOver = () => {
     setGameOver(true);
+  };
+
+  const handleScoreChange = (score) => {
+    handleDataChange(score);
   };
 
   const handleReplay = () => {
@@ -45,7 +49,10 @@ const Scene1 = () => {
             <Obstacles />
             <Rewards />
 
-            <Player handleGameOver={handleGameOver} />
+            <Player
+              handleGameOver={handleGameOver}
+              handleScoreChange={handleScoreChange}
+            />
             <Plane args={[30, 5000, 500, 50]} />
           </Physics>
         </Canvas>

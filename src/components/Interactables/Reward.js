@@ -24,7 +24,7 @@ function Reward({ position, index }) {
   });
 
   return (
-    <mesh ref={ref} scale={new Vector3(0.2, 1, 1)} name="player">
+    <mesh name="reward" ref={ref} scale={new Vector3(0.2, 1, 1)}>
       <sphereBufferGeometry />
       <meshLambertMaterial attach="material" color="yellow" />
     </mesh>

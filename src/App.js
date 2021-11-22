@@ -1,14 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.css";
 import Scene1 from "./components/Scene1";
 import LineChart from "./components/charts/LineChart";
 
 export default function App() {
+  const [lineChartData, setLineChartData] = useState([
+    {
+      x: 0,
+      y: 0,
+    },
+  ]);
+
+  const handleDataChange = (xData) => {
+    setLineChartData([...lineChartData, { x: xData, y: 1 }]);
+    console.log("handleDataChange", lineChartData);
+  };
   return (
     <>
-      <Scene1 />
+      <Scene1 handleDataChange={handleDataChange} />
       <aside style={{ position: "absolute", top: 0, right: 0 }}>
-        <LineChart />
+        <LineChart lineChartData={lineChartData} />
       </aside>
     </>
   );

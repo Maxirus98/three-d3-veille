@@ -1,12 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import "./LineChart.css";
-const LineChart = ({ totalScore }) => {
+const LineChart = ({ lineChartData }) => {
   const chartRef = useRef();
 
-  //Getting the data
   useEffect(() => {
-    // Elements determined by the size of the div
     const margin = { top: 20, right: 30, bottom: 30, left: 30 };
     const width =
       parseInt(d3.select("#lineChart").style("width")) -
@@ -18,38 +16,54 @@ const LineChart = ({ totalScore }) => {
       margin.bottom;
 
     // Set up chart
-    const svg = d3
-      .select(chartRef.current)
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .style("background-color", "red")
-      .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    const getChartSetup = () => {
+      return d3
+        .select(chartRef.current)
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .style("background-color", "red")
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    };
+    const svg = getChartSetup();
 
-    // x axis scale
-    const x = d3
-      .scaleLinear()
-      .domain(
-        d3.extent([0, 1, 2, , 3, 6], function (d) {
-          return d;
-        })
-      )
-      .range([0, width]);
-
+    const getXData = () => {
+      return d3
+        .scaleLinear()
+        .domain(
+          d3.extent([0, 100], function (d) {
+            return d;
+          })
+        )
+        .nice()
+        .range([0, width]);
+    };
+    const x = getXData();
     svg
       .append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x));
 
-    // y axis scale
-    const y = d3.scaleLinear().domain([0, 5]).range([height, 0]);
+    const getYData = () => {
+      return d3
+        .scaleLinear()
+        .domain(
+          d3.extent([0, 10], function (d) {
+            return d;
+          })
+        )
+        .nice()
+        .range([height, 0]);
+    };
+    const y = getYData();
 
     svg.append("g").call(d3.axisLeft(y));
 
     // Draw Line
     svg
       .append("path")
-      .datum([0, 1, 2, , 3, 6])
+      .transition()
+      .duration(2000)
       .attr("fill", "none")
       .attr("stroke", "white")
       .attr("stroke-width", 3)
@@ -58,11 +72,11 @@ const LineChart = ({ totalScore }) => {
         d3
           .line()
           .x(function (d) {
-            return x(d);
+            return x(d.x);
           })
           .y(function (d) {
-            return y(d);
-          })
+            return y(d.y);
+          })(lineChartData)
       );
 
     // Add title
@@ -78,7 +92,9 @@ const LineChart = ({ totalScore }) => {
 
   return (
     <div id="lineChart">
-      <svg ref={chartRef}></svg>
+      <svg id="svg" ref={chartRef}>
+        <p></p>
+      </svg>
     </div>
   );
 };
