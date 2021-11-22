@@ -1,7 +1,4 @@
 import { usePlane } from "use-cannon";
-import { useFrame } from "react-three-fiber";
-import { useEffect, useRef } from "react";
-const GROUND_HEIGHT = -50; // A Constant to store the ground height of the game.
 
 // A Ground plane that moves relative to the player. The player stays at 0,0
 function Plane({ args }) {

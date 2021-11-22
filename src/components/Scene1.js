@@ -1,6 +1,7 @@
 import { Stars } from "drei";
 import React, { useState, memo } from "react";
 import { Canvas } from "react-three-fiber";
+import { useEffect } from "react/cjs/react.development";
 import { Euler } from "three";
 import { Physics } from "use-cannon";
 import Plane from "../components/Plane";
@@ -10,16 +11,18 @@ import { Obstacles, Rewards } from "./Interactables/Interactables";
 
 // Obstacles x and z position are randomized
 const Scene1 = ({ handleDataChange }) => {
+  const [currentGameId, setCurrentGameId] = useState(1);
   const [gameOver, setGameOver] = useState(false);
   const handleGameOver = () => {
     setGameOver(true);
   };
 
   const handleScoreChange = (score) => {
-    handleDataChange(score);
+    handleDataChange(currentGameId, score);
   };
 
   const handleReplay = () => {
+    setCurrentGameId(currentGameId + 1);
     setGameOver(false);
   };
 

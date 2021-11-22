@@ -11,8 +11,8 @@ export default function App() {
     },
   ]);
 
-  const handleDataChange = useCallback((yData) => {
-    setLineChartData([...lineChartData, { x: 1, y: yData }]);
+  const handleDataChange = useCallback((xData, yData) => {
+    setLineChartData([...lineChartData, { x: xData, y: yData }]);
     console.log("handleDataChange", lineChartData);
   }, []);
   return (

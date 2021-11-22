@@ -21,7 +21,6 @@ const LineChart = ({ lineChartData }) => {
         .select(chartRef.current)
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
-        .style("background-color", "red")
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     };
@@ -35,7 +34,6 @@ const LineChart = ({ lineChartData }) => {
             return d;
           })
         )
-        .nice()
         .range([0, width]);
     };
     const x = getXData();
@@ -52,7 +50,6 @@ const LineChart = ({ lineChartData }) => {
             return d;
           })
         )
-        .nice()
         .range([height, 0]);
     };
     const y = getYData();
@@ -65,7 +62,6 @@ const LineChart = ({ lineChartData }) => {
       .transition()
       .ease(d3.easeLinear)
       .duration(5000)
-      .attr("fill", "none")
       .attr("stroke", "white")
       .attr("stroke-width", 3)
       .attr(
@@ -79,6 +75,9 @@ const LineChart = ({ lineChartData }) => {
             return y(d.y);
           })(lineChartData)
       );
+
+    svg.selectAll("path").attr("fill", "none");
+    svg.selectAll("line").attr("fill", "none");
 
     // Add title
     svg
