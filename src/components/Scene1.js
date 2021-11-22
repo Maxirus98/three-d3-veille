@@ -1,5 +1,5 @@
 import { Stars } from "drei";
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { Canvas } from "react-three-fiber";
 import { Euler } from "three";
 import { Physics } from "use-cannon";
@@ -61,4 +61,4 @@ const Scene1 = ({ handleDataChange }) => {
   );
 };
 
-export default Scene1;
+export default memo(Scene1);

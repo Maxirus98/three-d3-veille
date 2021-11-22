@@ -1,3 +1,2 @@
 ## Pseudocode
-LineChart --> x = scores, y = scores.length
-Player --> currentScore, handleGameOver = saveScore();
+Player score++ --> Scene1 --> App --> LineChart

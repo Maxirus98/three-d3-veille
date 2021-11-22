@@ -31,7 +31,7 @@ const LineChart = ({ lineChartData }) => {
       return d3
         .scaleLinear()
         .domain(
-          d3.extent([0, 100], function (d) {
+          d3.extent([0, 10], function (d) {
             return d;
           })
         )
@@ -48,7 +48,7 @@ const LineChart = ({ lineChartData }) => {
       return d3
         .scaleLinear()
         .domain(
-          d3.extent([0, 10], function (d) {
+          d3.extent([0, 100], function (d) {
             return d;
           })
         )
@@ -63,7 +63,8 @@ const LineChart = ({ lineChartData }) => {
     svg
       .append("path")
       .transition()
-      .duration(2000)
+      .ease(d3.easeLinear)
+      .duration(5000)
       .attr("fill", "none")
       .attr("stroke", "white")
       .attr("stroke-width", 3)

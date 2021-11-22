@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./styles.css";
 import Scene1 from "./components/Scene1";
 import LineChart from "./components/charts/LineChart";
@@ -11,10 +11,10 @@ export default function App() {
     },
   ]);
 
-  const handleDataChange = (xData) => {
-    setLineChartData([...lineChartData, { x: xData, y: 1 }]);
+  const handleDataChange = useCallback((yData) => {
+    setLineChartData([...lineChartData, { x: 1, y: yData }]);
     console.log("handleDataChange", lineChartData);
-  };
+  }, []);
   return (
     <>
       <Scene1 handleDataChange={handleDataChange} />
