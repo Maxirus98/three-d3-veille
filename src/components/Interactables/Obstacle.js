@@ -16,7 +16,7 @@ function Obstacle({ position }) {
   useFrame(() => {
     currentPositionZ += currentSpeed;
     api.position.set(position[0], position[1], currentPositionZ);
-  });
+  }, 0);
 
   return (
     <mesh ref={ref} name="obstacle">

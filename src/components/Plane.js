@@ -1,6 +1,5 @@
 import { usePlane } from "use-cannon";
 
-// A Ground plane that moves relative to the player. The player stays at 0,0
 function Plane({ args }) {
   const [ref, api] = usePlane(() => ({
     mass: 1000,
