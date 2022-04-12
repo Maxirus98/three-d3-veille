@@ -13,7 +13,7 @@ export default function App() {
 
   const handleDataChange = useCallback((xData, yData) => {
     setLineChartData([...lineChartData, { x: xData, y: yData }]);
-  }, []);
+  }, [lineChartData]);
 
   return (
     <>
